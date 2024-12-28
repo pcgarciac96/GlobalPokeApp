@@ -3,7 +3,7 @@
     <div
       class="w-52 h-52 bg-[#F22539] rounded-full flex justify-center items-center mt-28 border-2 border-black"
     >
-      <div class="absolute z-10 top-10 ml-5">
+      <div class="absolute z-10 top-11 ml-5">
         <pikachu />
       </div>
     </div>

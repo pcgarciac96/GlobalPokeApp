@@ -1,6 +1,7 @@
 import { RouteRecordRaw, createRouter, createWebHistory} from 'vue-router';
 
 import HomeView from '../views/Home.vue';
+import ListPokemon from '../views/ListPokemon.vue';
 
 
 const routes: RouteRecordRaw[] = [
@@ -9,11 +10,11 @@ const routes: RouteRecordRaw[] = [
     name:'HomeView',
     component:HomeView
   },
-//   {
-//     path: '/Teams',
-//     name:'TeamsView',
-//     component:TeamsView
-//   }
+  {
+    path: '/ListPokemon',
+    name:'ListPokemon',
+    component:ListPokemon
+  }
 ]
 
 const router = createRouter({

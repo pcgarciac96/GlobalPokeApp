@@ -2,7 +2,7 @@
   <button
     :class="buttonClass"
     @click="handleClick"
-    class="px-4 py-2 rounded-3xl focus:outline-none transition duration-300"
+    class="px-4 py-2 rounded-3xl focus:outline-none transition duration-300 font-lato"
   >
     {{ text }}
   </button>

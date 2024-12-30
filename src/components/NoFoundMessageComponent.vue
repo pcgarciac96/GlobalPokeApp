@@ -1,9 +1,9 @@
 <template>
   <div
-    class="flex flex-col justify-center items-center  w-full h-full"
+    class="flex flex-col justify-center items-center w-full h-full"
   >
     <h1 class="text-3xl font-bold font-lato">{{ title }}</h1>
-    <p class="text-center my-5 text-gray-500 justify-center w-10/12 font-lato">
+    <p class="text-center my-5 text-gray-500 justify-center  font-lato">
       {{ message }}
     </p>
     <ButtonComponent

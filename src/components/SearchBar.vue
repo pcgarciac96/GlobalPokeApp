@@ -1,11 +1,14 @@
 <template>
-    <div class="flex items-center w-80 mb-4">
+    <div class="flex items-center w-full mb-4">
       <input
         v-model="searchQuery"
         type="text"
         placeholder="Search Pokémon..."
-        class="p-2 border rounded-l-md w-full"
+        class="p-2 border rounded-md w-full font-lato focus:outline-none"
+        :class="isFocused ? 'border-none' : 'border'"
         @input="searchPokemon"
+        @focus="isFocused = true"
+        @blur="isFocused = false"
       />
     </div>
   </template>

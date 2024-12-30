@@ -1,20 +1,17 @@
 <template>
-  <div class="flex flex-col">
-    <div
-      class="flex flex-col justify-center items-center pt-20 w-full h-full sm:px-10 md:px-0"
-    >
+  <div class="flex justify-center items-center flex-col px-4">
+    <div class="py-10">
       <SearchBar :onSearch="searchPokemon" />
+
       <div v-if="filteredPokemons.length >= 1">
         <div class="flex flex-col items-center w-96 h-96 overflow-y-auto">
           <div
             v-for="pokemon in filteredPokemons"
             :key="pokemon.name"
-            class="flex flex-row items-center w-full mb-5 bg-white h-14 rounded-md pl-4 pr-2"
-            
-
+            class="flex flex-row items-center w-full mb-5 bg-white h-14 rounded-md pl-4 pr-2 py-2"
           >
             <p
-            @click="openPokemonModal(pokemon.name)"
+              @click="openPokemonModal(pokemon.name)"
               class="w-1/2 flex justify-start items-center text-lg font-lato capitalize"
             >
               {{ pokemon.name }}
@@ -32,33 +29,37 @@
             </div>
           </div>
         </div>
-     
-      <div class="bg-red-00 w-full h-full">
-        <div class="flex justify-center items-center w-full h-full gap-10">
-          <ButtonComponent
-            text="All"
-            color="#F22539"
-            @click="showFavorites = false"
-          />
-          <ButtonComponent
-            text="Favorites"
-            color="#BFBFBF"
-            @click="showFavorites = true"
-          />
-        </div>
+      </div>
+      <div
+        v-else
+        class="flex flex-col justify-center items-center w-96 h-96 sm:px-10 md:px-0"
+      >
+        <NoFoundMessageComponent
+          title="Uh-oh!"
+          message="You look lost on your journey!"
+        />
       </div>
     </div>
-    <div v-else class="bg-red-00 w-full h-full">
-      <NoFoundMessageComponent title="Uh-oh!" message="You look lost on your journey!" />
-    </div>
-  </div>
-  <PokemonModal
+    <PokemonModal
       :isOpen="isModalOpen"
       :pokemonName="selectedPokemon"
       @update:isOpen="isModalOpen = $event"
     />
-</div>
-
+    <div class="w-full h-full bg-white py-4 shadow-custom">
+      <div class="flex justify-center items-center w-full h-full gap-10">
+        <ButtonComponent
+          text="All"
+          color="#F22539"
+          @click="showFavorites = false"
+        />
+        <ButtonComponent
+          text="Favorites"
+          color="#BFBFBF"
+          @click="showFavorites = true"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from "vue";
@@ -141,3 +142,8 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.shadow-custom {
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+</style>

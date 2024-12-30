@@ -4,7 +4,7 @@
     class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center"
   >
     <div
-      class="relative bg-red-600 rounded-lg w-96 shadow-lg border"
+      class="relative bg-white rounded-lg w-96 shadow-lg border"
       @click="closeModal"
     >
       <div class="absolute w-5 h-5 top-2 right-2 cursor-pointer">
@@ -12,7 +12,7 @@
       </div>
 
       <div
-        class="flex justify-center mb-4 bg-red-50"
+        class="flex justify-center mb-4 rounded-t-md"
         :style="{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: '55%',
@@ -25,35 +25,31 @@
           class="w-32 h-32 object-contain"
         />
       </div>
-      <div>
-        <p><strong>Name:</strong> {{ pokemon?.weight }}</p>
-        <p><strong>Weight:</strong> {{ pokemon?.weight }}</p>
-        <p><strong>Height:</strong> {{ pokemon?.height }}</p>
+      <div class="px-4">
+        <p class="my-2 font-lato text-sm text-[#5E5E5E] capitalize"><strong class="text-md">Name:</strong> {{ pokemon?.name }}</p>
+        <hr />
+        <p class="my-2 font-lato text-sm text-[#5E5E5E]"><strong>Weight:</strong> {{ pokemon?.weight }}</p>
+        <hr />
+        <p class="my-2 font-lato text-sm text-[#5E5E5E]"><strong>Height:</strong> {{ pokemon?.height }}</p>
+        <hr />
 
-        <div class="flex flex-row mb-2">
-          <strong class="mr-2">Types:</strong>
-          <p>
-            <span v-for="(type, index) in pokemon?.types" :key="type.type.name">
+        <div class="flex flex-row mb-2 my-2 font-lato text-sm text-[#5E5E5E]">
+          <strong class="mr-2 font-lato">Types:</strong>
+          <p >
+            <span class="capitalize" v-for="(type, index) in pokemon?.types" :key="type.type.name">
               {{ type.type.name
               }}<span v-if="index < pokemon?.types.length - 1">, </span>
             </span>
           </p>
         </div>
-      </div>
-
-      <div class="flex justify-between mt-4">
-        <button
-          @click="shareToFriends"
-          class="px-4 py-2 bg-red-500 text-white rounded-md flex-1 mr-2"
-        >
-          Share to my friends
-        </button>
-        <button
-          @click="addToFavorites"
-          class="px-4 py-2 bg-yellow-400 text-white rounded-md flex-1"
-        >
-          ★
-        </button>
+        <hr />
+        <div class="my-5">
+          <ButtonComponent
+            text="Share to my friends"
+            color="#F22539"
+            @click="sharedToFriends"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -64,11 +60,13 @@ import { ref, watch } from "vue";
 import { getPokemonbyName } from "../services/api";
 import closeIcon from "../assets/icons/closeIcon.vue";
 import backgroundImagePath from "../assets/images/backgroundImage.png";
+import ButtonComponent from "./ButtonComponent.vue";
 
 export default {
   name: "PokemonModal",
   components: {
     closeIcon,
+    ButtonComponent,
   },
   props: {
     isOpen: {
@@ -92,6 +90,26 @@ export default {
         } catch (error) {
           console.error("Error fetching Pokémon details:", error);
         }
+      }
+    };
+
+    const sharedToFriends = () => {
+      if (pokemon.value) {
+        const textToShared = [
+          `Name: ${pokemon.value.name}`,
+          `Weight: ${pokemon.value.weight}`,
+          `Height: ${pokemon.value.height}`,
+          `Types: ${pokemon.value.types.map((type: any) => type.type.name).join(", ")}`,
+        ].join(", ");
+
+        navigator.clipboard
+          .writeText(textToShared)
+          .then(() => {
+            alert("Copied to clipboard: " + textToShared);
+          })
+          .catch((err) => {
+            console.error("Failed to copy text: ", err);
+          });
       }
     };
 
@@ -131,6 +149,7 @@ export default {
       shareToFriends,
       addToFavorites,
       backgroundImage,
+      sharedToFriends,
     };
   },
 };

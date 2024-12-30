@@ -22,4 +22,16 @@ export const getPokemonList = async (limit: number, offset: number): Promise<any
   }
 };
 
+export const getPokemonbyName = async (name: string): Promise<any> => {
+  console.log(name);
+  
+  try {
+    const response = await api.get(`/pokemon/${name}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching Pokémon:", error);
+    throw new Error('Error al obtener el Pokémon');
+  }
+};
+
 export default api;

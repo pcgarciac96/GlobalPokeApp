@@ -24,10 +24,8 @@
     setup(props) {
       const searchQuery = ref("");
   
-      const searchPokemon = async () => {
-        if (searchQuery.value.trim()) {
-          props.onSearch(searchQuery.value);
-        }
+      const searchPokemon = () => {
+        props.onSearch(searchQuery.value);  // Emitir siempre el valor
       };
   
       return { searchQuery, searchPokemon };

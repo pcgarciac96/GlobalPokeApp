@@ -7,7 +7,7 @@
       class="relative bg-white rounded-lg w-96 shadow-lg border"
       @click="closeModal"
     >
-      <div class="absolute w-5 h-5 top-2 right-2 cursor-pointer">
+      <div class="absolute w-5 h-5 top-2 right-5 cursor-pointer">
         <closeIcon />
       </div>
 
@@ -26,17 +26,27 @@
         />
       </div>
       <div class="px-4">
-        <p class="my-2 font-lato text-sm text-[#5E5E5E] capitalize"><strong class="text-md">Name:</strong> {{ pokemon?.name }}</p>
+        <p class="my-2 font-lato text-sm text-[#5E5E5E] capitalize">
+          <strong class="text-md">Name:</strong> {{ pokemon?.name }}
+        </p>
         <hr />
-        <p class="my-2 font-lato text-sm text-[#5E5E5E]"><strong>Weight:</strong> {{ pokemon?.weight }}</p>
+        <p class="my-2 font-lato text-sm text-[#5E5E5E]">
+          <strong>Weight:</strong> {{ pokemon?.weight }}
+        </p>
         <hr />
-        <p class="my-2 font-lato text-sm text-[#5E5E5E]"><strong>Height:</strong> {{ pokemon?.height }}</p>
+        <p class="my-2 font-lato text-sm text-[#5E5E5E]">
+          <strong>Height:</strong> {{ pokemon?.height }}
+        </p>
         <hr />
 
         <div class="flex flex-row mb-2 my-2 font-lato text-sm text-[#5E5E5E]">
           <strong class="mr-2 font-lato">Types:</strong>
-          <p >
-            <span class="capitalize" v-for="(type, index) in pokemon?.types" :key="type.type.name">
+          <p>
+            <span
+              class="capitalize"
+              v-for="(type, index) in pokemon?.types"
+              :key="type.type.name"
+            >
               {{ type.type.name
               }}<span v-if="index < pokemon?.types.length - 1">, </span>
             </span>
@@ -99,7 +109,9 @@ export default {
           `Name: ${pokemon.value.name}`,
           `Weight: ${pokemon.value.weight}`,
           `Height: ${pokemon.value.height}`,
-          `Types: ${pokemon.value.types.map((type: any) => type.type.name).join(", ")}`,
+          `Types: ${pokemon.value.types
+            .map((type: any) => type.type.name)
+            .join(", ")}`,
         ].join(", ");
 
         navigator.clipboard

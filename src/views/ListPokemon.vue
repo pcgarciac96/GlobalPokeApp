@@ -1,6 +1,7 @@
 <template>
-  <div class="flex justify-center items-center bg-[#F9F9F9]">
-    <ListAllPokemons :pokemons="pokemonList" />
+  <div class="flex justify-center items-center bg-[#F9F9F9] h-screen">
+    <ListAllPokemons v-if="pokemonList.length > 0" :pokemons="pokemonList" />
+    <Loader v-else/>
   </div>
 </template>
 
@@ -9,10 +10,12 @@ import { defineComponent, onMounted, ref } from "vue";
 import { getPokemonList } from "../services/api";
 import { Pokemon } from "../interfaces/Pokemons";
 import ListAllPokemons from "../components/ListAllPokemons.vue";
+import Loader from "../components/Loader.vue";
 
 export default defineComponent({
   components: {
     ListAllPokemons,
+    Loader,
   },
   setup() {
     const pokemonList = ref<Pokemon[]>([]);
@@ -23,7 +26,11 @@ export default defineComponent({
 
     onMounted(async () => {
       const response = await getPokemonList(30, 0);
-      pokemonList.value = response.data.results;
+      setTimeout(() => {
+        pokemonList.value = response.data.results;
+      }, 3000); // Tiempo de espera para mostrar el Loader ya que debe ser visible hasta que se cargue la lista de Pokémon
+
+
       console.log(pokemonList.value);
     });
     return { handleButtonClick, pokemonList };

@@ -1,8 +1,8 @@
 <template>
   <button
-    :class="buttonClass"
+    :style="{ width: buttonWidth, backgroundColor: buttonColor }"
     @click="handleClick"
-    class="px-4 py-2 rounded-3xl focus:outline-none transition duration-300 font-lato"
+    class="px-4 py-2 rounded-3xl focus:outline-none transition duration-300 font-lato text-white hover:opacity-90 focus:ring-2 focus:ring-offset-2"
   >
     {{ text }}
   </button>
@@ -20,18 +20,16 @@ export default defineComponent({
     },
     color: {
       type: String,
-      default: "bg-blue-500",
+      default: "#3b82f6",
+    },
+    width: {
+      type: String,
+      default: "auto",
     },
   },
   setup(props, { emit }) {
-    const buttonClass = computed(() => {
-      return `${props.color} text-white hover:${props.color.replace(
-        "500",
-        "700"
-      )} focus:ring-2 focus:ring-offset-2 focus:ring-${
-        props.color.split("-")[1]
-      }`;
-    });
+    const buttonWidth = props.width;
+    const buttonColor = props.color;
 
     const handleClick = () => {
       emit("click");
@@ -39,7 +37,8 @@ export default defineComponent({
 
     return {
       text: props.text,
-      buttonClass,
+      buttonWidth,
+      buttonColor,
       handleClick,
     };
   },

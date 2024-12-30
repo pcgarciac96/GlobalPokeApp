@@ -8,7 +8,7 @@ const api: AxiosInstance = axios.create({
   },
 });
 
-export const getPokemonList = async (limit: number = 20, offset: number = 0): Promise<any> => {
+export const getPokemonList = async (limit: number, offset: number): Promise<any> => {
   try {
     const response = await api.get(`/pokemon`, {
       params: {

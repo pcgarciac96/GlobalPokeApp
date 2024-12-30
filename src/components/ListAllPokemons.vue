@@ -10,8 +10,11 @@
             v-for="pokemon in filteredPokemons"
             :key="pokemon.name"
             class="flex flex-row items-center w-full mb-5 bg-white h-14 rounded-md pl-4 pr-2"
+            
+
           >
             <p
+            @click="openPokemonModal(pokemon.name)"
               class="w-1/2 flex justify-start items-center text-lg font-lato capitalize"
             >
               {{ pokemon.name }}
@@ -49,20 +52,24 @@
       <NoFoundMessageComponent title="Uh-oh!" message="You look lost on your journey!" />
     </div>
   </div>
+  <PokemonModal
+      :isOpen="isModalOpen"
+      :pokemonName="selectedPokemon"
+      @update:isOpen="isModalOpen = $event"
+    />
 </div>
 
 </template>
-
 <script lang="ts">
-import { computed, defineComponent, PropType, ref, watch } from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 import { useStore } from "vuex";
 import { Pokemon } from "../interfaces/Pokemons";
 import favIcon from "../assets/icons/favIcon.vue";
 import ButtonComponent from "../components/ButtonComponent.vue";
 import SearchBar from "../components/SearchBar.vue";
 import NoFoundMessageComponent from "../components/NoFoundMessageComponent.vue";
+import PokemonModal from "../components/ModalDetails.vue";
 import { getPokemonbyName } from "../services/api";
-
 
 export default defineComponent({
   name: "ListAllPokemons",
@@ -70,7 +77,8 @@ export default defineComponent({
     favIcon,
     ButtonComponent,
     SearchBar,
-    NoFoundMessageComponent
+    NoFoundMessageComponent,
+    PokemonModal,
   },
   props: {
     pokemons: {
@@ -82,6 +90,8 @@ export default defineComponent({
     const store = useStore();
     const showFavorites = ref(false);
     const searchQuery = ref("");
+    const isModalOpen = ref(false);
+    const selectedPokemon = ref("");
 
     const filteredPokemons = computed(() => {
       let pokemonsToSearch = showFavorites.value
@@ -113,12 +123,20 @@ export default defineComponent({
       }
     };
 
+    const openPokemonModal = (pokemonName: string) => {
+      selectedPokemon.value = pokemonName;
+      isModalOpen.value = true;
+    };
+
     return {
       showFavorites,
       filteredPokemons,
       toggleFavorite,
       isFavorite,
       searchPokemon,
+      isModalOpen,
+      selectedPokemon,
+      openPokemonModal,
     };
   },
 });

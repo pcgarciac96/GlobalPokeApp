@@ -18,7 +18,7 @@
       </p>
       <ButtonComponent
         text="Get started"
-        color="bg-[#F22539]"
+        color="#F22539"
         @click="redirectToListPokemon"
       />
     </div>

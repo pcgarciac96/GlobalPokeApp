@@ -4,7 +4,7 @@
       <SearchBar :onSearch="searchPokemon" />
 
       <div v-if="filteredPokemons.length >= 1">
-        <div class="flex flex-col items-center w-96 h-96 overflow-y-auto">
+        <div class="flex flex-col items-center w-96 sm:h-1/2 md:h-96 overflow-y-auto">
           <div
             v-for="pokemon in filteredPokemons"
             :key="pokemon.name"
@@ -45,20 +45,23 @@
       :pokemonName="selectedPokemon"
       @update:isOpen="isModalOpen = $event"
     />
-    <div class="w-full h-full bg-white py-4 shadow-custom">
-      <div class="flex justify-center items-center w-full h-full gap-10">
-        <ButtonComponent
-          text="All"
-          color="#F22539"
-          @click="showFavorites = false"
-        />
-        <ButtonComponent
-          text="Favorites"
-          color="#BFBFBF"
-          @click="showFavorites = true"
-        />
+    {{ showFavorites }}
+      <div class="w-full h-full bg-white py-4 shadow-custom">
+        <div class="flex justify-center items-center w-full h-full gap-10">
+          <ButtonComponent
+            text="All"
+            :color="!showFavorites ? '#F22539' : '#BFBFBF'"
+            width="145px"
+            @click="showFavorites = false"
+          />
+          <ButtonComponent
+            text="Favorites"
+            :color="showFavorites ? '#F22539' : '#BFBFBF'"
+            width="145px"
+            @click="showFavorites = true"
+          />
+        </div>
       </div>
-    </div>
   </div>
 </template>
 <script lang="ts">

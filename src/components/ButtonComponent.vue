@@ -2,9 +2,10 @@
   <button
     :style="{ width: buttonWidth, backgroundColor: buttonColor }"
     @click="handleClick"
-    class="px-4 py-2 rounded-3xl font-lato text-white"
+    class="px-4 py-2 rounded-3xl font-lato text-white flex items-center justify-center gap-2"
   >
-    {{ text }}
+    <slot name="icon"></slot> <!-- Slot para el ícono -->
+    <span>{{ text }}</span>
   </button>
 </template>
 

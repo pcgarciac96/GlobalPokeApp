@@ -53,12 +53,20 @@
           </p>
         </div>
         <hr />
-        <div class="my-5">
-          <ButtonComponent
-            text="Share to my friends"
-            color="#F22539"
-            @click="sharedToFriends"
-          />
+        <div class="flex flex-row my-5">
+          <div class="flex w-full  ">
+            <ButtonComponent
+              text="Share to my friends"
+              color="#F22539"
+              @click="sharedToFriends"
+            />
+          </div>
+          <div class="flex w-full justify-end items-end">
+            <FavoriteButton
+              :isFavorite="isFavorite(pokemon?.name)"
+              :toggleFavorite="() => toggleFavorite(pokemon)"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -71,12 +79,15 @@ import { getPokemonbyName } from "../services/api";
 import closeIcon from "../assets/icons/closeIcon.vue";
 import backgroundImagePath from "../assets/images/backgroundImage.png";
 import ButtonComponent from "./ButtonComponent.vue";
+import FavoriteButton from "./FavoriteButtonComponent.vue";
+import { useStore } from "vuex";
 
 export default {
   name: "PokemonModal",
   components: {
     closeIcon,
     ButtonComponent,
+    FavoriteButton,
   },
   props: {
     isOpen: {
@@ -89,6 +100,7 @@ export default {
     },
   },
   setup(props, { emit }) {
+    const store = useStore();
     const pokemon = ref<any>(null);
     const backgroundImage = ref(backgroundImagePath);
 
@@ -147,21 +159,27 @@ export default {
       emit("update:isOpen", false);
     };
 
-    const shareToFriends = () => {
-      alert("Shared to friends!");
+    const isFavorite = (pokemonName: string | undefined) => {
+      return pokemonName
+        ? store.getters["favorites/isFavorite"](pokemonName)
+        : false;
     };
 
-    const addToFavorites = () => {
-      alert("Added to favorites!");
+    const toggleFavorite = (pokemon: any) => {
+      if (isFavorite(pokemon?.name)) {
+        store.dispatch("favorites/removeFavorite", pokemon?.name);
+      } else {
+        store.dispatch("favorites/addFavorite", pokemon);
+      }
     };
 
     return {
       pokemon,
       closeModal,
-      shareToFriends,
-      addToFavorites,
       backgroundImage,
       sharedToFriends,
+      isFavorite,
+      toggleFavorite,
     };
   },
 };

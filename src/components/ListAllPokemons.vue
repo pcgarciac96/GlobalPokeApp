@@ -8,7 +8,7 @@
           <div
             v-for="pokemon in filteredPokemons"
             :key="pokemon.name"
-            class="flex flex-row items-center w-full mb-5 bg-white h-14 rounded-md pl-4 pr-2 py-2"
+            class="flex flex-row items-center w-full mb-5 bg-white h-14 rounded-md pl-4 pr-2 py-2 cursor-pointer"
           >
             <p
               @click="openPokemonModal(pokemon.name)"
@@ -17,15 +17,10 @@
               {{ pokemon.name }}
             </p>
             <div class="w-1/2 flex justify-end items-center">
-              <div @click="toggleFavorite(pokemon)" class="cursor-pointer">
-                <div
-                  class="flex justify-center items-center w-11 h-11 bg-[#F5F5F5] rounded-full"
-                >
-                  <favIcon
-                    :color="isFavorite(pokemon.name) ? '#ECA539' : '#BFBFBF'"
-                  />
-                </div>
-              </div>
+              <FavoriteButton
+                :isFavorite="isFavorite(pokemon.name)"
+                :toggleFavorite="() => toggleFavorite(pokemon)"
+              />
             </div>
           </div>
         </div>
@@ -70,6 +65,7 @@ import { useStore } from "vuex";
 import { Pokemon } from "../interfaces/Pokemons";
 import favIcon from "../assets/icons/favIcon.vue";
 import ButtonComponent from "../components/ButtonComponent.vue";
+import FavoriteButton from "../components/FavoriteButtonComponent.vue";
 import SearchBar from "../components/SearchBar.vue";
 import NoFoundMessageComponent from "../components/NoFoundMessageComponent.vue";
 import PokemonModal from "../components/ModalDetails.vue";
@@ -83,6 +79,7 @@ export default defineComponent({
     SearchBar,
     NoFoundMessageComponent,
     PokemonModal,
+    FavoriteButton,
   },
   props: {
     pokemons: {

@@ -1,5 +1,5 @@
 <template>
-    <div class="animate-pulse">
+    <div class="flex justify-center items-center animate-pulse w-full h-full">
         <PokeLoader />
     </div>
 </template>

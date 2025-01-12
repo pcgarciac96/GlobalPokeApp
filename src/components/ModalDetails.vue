@@ -1,13 +1,13 @@
 <template>
   <div
     v-if="isOpen"
-    class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center"
+    class="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center sm:px-10 md:px-0"
   >
-    <div
-      class="relative bg-white rounded-lg w-96 shadow-lg border"
-      @click="closeModal"
-    >
-      <div class="absolute w-5 h-5 top-2 right-5 cursor-pointer">
+    <div class="relative bg-white rounded-lg w-96 shadow-lg border">
+      <div
+        class="absolute w-5 h-5 top-2 right-5 cursor-pointer"
+        @click="closeModal"
+      >
         <closeIcon />
       </div>
 
@@ -54,14 +54,14 @@
         </div>
         <hr />
         <div class="flex flex-row my-5">
-          <div class="flex w-full  ">
+          <div class="flex w-full">
             <ButtonComponent
               text="Share to my friends"
               color="#F22539"
               @click="sharedToFriends"
             />
           </div>
-          <div class="flex w-full justify-end items-end">
+          <div class="flex w-12 justify-end items-end">
             <FavoriteButton
               :isFavorite="isFavorite(pokemon?.name)"
               :toggleFavorite="() => toggleFavorite(pokemon)"

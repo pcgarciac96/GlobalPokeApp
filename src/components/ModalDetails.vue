@@ -116,24 +116,46 @@ export default {
     };
 
     const sharedToFriends = () => {
-      if (pokemon.value) {
-        const textToShared = [
-          `Name: ${pokemon.value.name}`,
-          `Weight: ${pokemon.value.weight}`,
-          `Height: ${pokemon.value.height}`,
-          `Types: ${pokemon.value.types
-            .map((type: any) => type.type.name)
-            .join(", ")}`,
-        ].join(", ");
+      if (!pokemon.value) return;
 
+      // Preparamos el texto que será copiado al portapapeles.
+      const textToShared = [
+        `Name: ${pokemon.value.name}`,
+        `Weight: ${pokemon.value.weight}`,
+        `Height: ${pokemon.value.height}`,
+        `Types: ${pokemon.value.types
+          .map((type: any) => type.type.name)
+          .join(", ")}`,
+      ].join(", ");
+
+      // Verifico si el navegador soporta la API navigator.clipboard.
+      if (navigator.clipboard) {
+        // Uso navigator.clipboard.writeText para copiar el texto.
         navigator.clipboard
           .writeText(textToShared)
           .then(() => {
+            // copia exitosa
             alert("Copied to clipboard: " + textToShared);
           })
           .catch((err) => {
+            // caputa error
             console.error("Failed to copy text: ", err);
           });
+      } else {
+        // Si navigator.clipboard no funciona, uso un metodo de fallback
+        const textArea = document.createElement("textarea");
+        textArea.value = textToShared;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          //copio el contenido usando document.execCommand("copy").
+          document.execCommand("copy");
+          alert("Copied to clipboard: " + textToShared); // copie exitosa
+        } catch (err) {
+          // captura error
+          console.error("Fallback: Failed to copy text", err);
+        }
+        document.body.removeChild(textArea);
       }
     };
 
